@@ -1,0 +1,10 @@
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: "Raleway";
+    /* background-color: red; */
+}
+
+.products a {
+    text-decoration: none;
+}
