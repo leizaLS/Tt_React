@@ -22,7 +22,7 @@ const Products = () => {
         console.error("Firebase Error:", error);
       } finally {
         setLoading(false);
-        console.log(productsList); //Gamelist firebase
+        //console.log(productsList); //Gamelist firebase
       }
     };
 
