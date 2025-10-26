@@ -1,46 +1,53 @@
 import { Link } from "react-router-dom";
+import { useCart } from "../context/context";
 
 const NavBar = () => {
-    // let n = "";
-    // if (localStorage.getItem("cartList")) {
-    //     let list = JSON.parse(localStorage.getItem("cartList")).length;
-    //     if (list > 0) {
-    //         n = list;
-    //     }
-    // }
-    return (
-        <header id="search-banner">
-            <Link to='/'>
-                <div className="logo-container">
-                    <img id="logo" src="../src/img/logo.png" alt="Logo"></img>
-                    <span className="site-name">GAMESTOCK</span>
-                </div>
-            </Link>
+  const { cartItems } = useCart();
+  const cartCount = cartItems.length;
 
-            <div className="search-container">
-                <div className="input-with-icon">
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="search-input" placeholder="Buscar..."></input>
-                </div>
-                <div className="search-results"></div>
-            </div>
+  return (
+    <header id="search-banner">
+      <Link to="/">
+        <div className="logo-container">
+          <img id="logo" src="../src/img/logo.png" alt="Logo" />
+          <span className="site-name">GAMESTOCK</span>
+        </div>
+      </Link>
 
-            <div className="bar-items">
-                <button className="mobile-search">
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                </button>
+      <div className="search-container">
+        <div className="input-with-icon">
+          <i className="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Buscar..."
+          />
+        </div>
+        <div className="search-results"></div>
+      </div>
 
-                <button title="Iniciar sesión/Registro" id="account">
-                    <i className="fa-solid fa-user"></i>
-                </button>
+      <div className="bar-items">
+        <button className="mobile-search">
+          <i className="fa-solid fa-magnifying-glass"></i>
+        </button>
 
-                <button title="Ver carrito" id="cart">
-                    <i className="fa-solid fa-cart-shopping"></i>
-                    <span id="cart-count"></span>
-                </button>            
-            </div>
+        <button title="Iniciar sesión/Registro" id="account">
+          <i className="fa-solid fa-user"></i>
+        </button>
 
-        </header>
-    )
-}
+        <button title="Ver carrito" id="cart">
+          <i className="fa-solid fa-cart-shopping"></i>
+
+          {/* ✅ Solo mostramos el círculo si hay algo en el carrito */}
+          {cartCount > 0 && (
+            <span id="cart-count" className="cart-badge">
+              {cartCount}
+            </span>
+          )}
+        </button>
+      </div>
+    </header>
+  );
+};
+
 export default NavBar;
