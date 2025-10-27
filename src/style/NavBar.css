@@ -111,37 +111,6 @@
     display: none;
 }
 
-/* Resultados de búsqueda */
-.search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #3d3d3d;
-    border-radius: 3px;
-    z-index: 999;
-    box-sizing: border-box;
-}
-
-.search-result-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 2px solid #555;
-    border-left: 2px solid #555;
-    border-right: 2px solid #555;
-    color: white;
-    cursor: pointer;
-    background-color: #3d3d3d;
-    border-radius: 3px;
-    text-align: justify;
-}
-
-.search-result-item:hover {
-    background-color: #444;
-}
-
 /* Responsive */
 @media (max-width: 800px) {
     .site-name {
@@ -186,10 +155,6 @@
         opacity: 1;
         pointer-events: auto;
         width: 95%;
-    }
-
-    .search-result-item {
-        padding: 5px;
     }
 
     .bar-items button {

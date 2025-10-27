@@ -35,16 +35,17 @@ const NavBar = () => {
           <i className="fa-solid fa-user"></i>
         </button>
 
-        <button title="Ver carrito" id="cart">
-          <i className="fa-solid fa-cart-shopping"></i>
+        <Link to="/cart">
+          <button title="Ver carrito" id="cart">
+            <i className="fa-solid fa-cart-shopping"></i>
 
-          {/* ✅ Solo mostramos el círculo si hay algo en el carrito */}
-          {cartCount > 0 && (
-            <span id="cart-count" className="cart-badge">
-              {cartCount}
-            </span>
-          )}
-        </button>
+            {cartCount > 0 && (
+              <span id="cart-count" className="cart-badge">
+                {cartCount}
+              </span>
+            )}
+          </button>
+        </Link>
       </div>
     </header>
   );

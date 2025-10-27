@@ -7,6 +7,7 @@ import './App.css'
 import NavBar from './components/NavBar.jsx'
 import Products from './components/Products.jsx'
 import ProductDetail from './components/ProductDetail.jsx'
+import Cart from './components/Cart.jsx'
 import { Routes, Route } from 'react-router-dom'
 // import { useEffect } from 'react'
 
@@ -17,6 +18,7 @@ export default function App() {
       <Routes>
         {<Route path="/" element={<Products/>} />}
         {<Route path="/product/:id" element={<ProductDetail/>} />}
+        {<Route path="/cart" element={<Cart/>} />}
       </Routes> 
     </>
   )
