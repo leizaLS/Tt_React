@@ -33,7 +33,7 @@ const ProductDetail = () => {
     fetchProductData();
   }, [id]);
 
-  if (loading) return;
+  if (loading) return ;
   if (error) return <h1>{error}</h1>;
   if (!product) return <h1>Producto no encontrado o no disponible.</h1>;
 
@@ -43,7 +43,9 @@ const ProductDetail = () => {
       <img src={product.header_image} alt={product.name} />
       <div dangerouslySetInnerHTML={{ __html: product.about_the_game }} />
       <p>Precio: {product.price_overview?.final_formatted}</p>
-      <button onClick={() => addToCart(id)}>COMPRAR</button>
+      <button onClick={() => { console.log("Botón COMPRAR presionado para producto:", id); addToCart(id); }}>
+      COMPRAR
+      </button>
     </div>
   );
 };
