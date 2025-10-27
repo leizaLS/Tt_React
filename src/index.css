@@ -1,7 +1,9 @@
 /* Import de css */
 @import url(../src/style/NavBar.css);
+@import url(../src/style/Footer.css);
 @import url(../src/style/Products.css);
 @import url(../src/style/Product.css);
+@import url(../src/style/Cart.css);
 
 /* Fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:wght@100&family=Mukta+Vaani&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
