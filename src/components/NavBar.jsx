@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/context";
 
+import logo from "../img/logo.png";
+
 const NavBar = () => {
   const { cartItems } = useCart();
   const cartCount = cartItems.length;
@@ -9,7 +11,7 @@ const NavBar = () => {
     <header id="search-banner">
       <Link to="/Tt_React">
         <div className="logo-container">
-          <img id="logo" src="../src/img/logo.png" alt="Logo" />
+          <img id="logo" src={logo} alt="Logo" />
           <span className="site-name">GAMESTOCK</span>
         </div>
       </Link>
