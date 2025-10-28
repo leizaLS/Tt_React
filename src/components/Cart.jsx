@@ -3,6 +3,8 @@ import { useCart } from "../context/context"; // Asegúrate de que el contexto m
 import { db } from "../db-firebase/firebase.js"; // Asegúrate de importar correctamente tu configuración de Firebase
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+import cart from "../img/cart-empty.png";
+
 const Cart = () => {
   const { cartItems, changeQuantity, clearCart, calculateTotal } = useCart();
   const [products, setProducts] = useState([]);  // Guardamos los productos obtenidos de Firebase
@@ -87,7 +89,7 @@ const Cart = () => {
             <p>Cargando...</p>
           ) : cartItemsWithDetails.length === 0 ? (
             <div className="emptyMsg">
-              <img src="../src/img/cart-empty.png" alt="empty cart" />
+              <img src={cart} alt="empty cart" />
               <h3>No tienes productos en el carrito</h3>
             </div>
           ) : (
