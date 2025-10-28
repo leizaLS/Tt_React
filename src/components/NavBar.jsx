@@ -11,7 +11,7 @@ const NavBar = () => {
     <header id="search-banner">
       <Link to="/Tt_React">
         <div className="logo-container">
-          <img id="logo" src={logo} alt="Logo" />
+          <img id="logo" src={logo} alt="logo" />
           <span className="site-name">GAMESTOCK</span>
         </div>
       </Link>
