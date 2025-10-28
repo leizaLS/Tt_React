@@ -7,7 +7,7 @@ const NavBar = () => {
 
   return (
     <header id="search-banner">
-      <Link to="/">
+      <Link to="/Tt_React">
         <div className="logo-container">
           <img id="logo" src="../src/img/logo.png" alt="Logo" />
           <span className="site-name">GAMESTOCK</span>

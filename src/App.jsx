@@ -22,7 +22,7 @@ export default function App() {
     <>
       <NavBar/>
       <Routes>
-        <Route path="/" element={<Products/>} />
+        <Route path="/Tt_React" element={<Products/>} />
         <Route path="/product/:id" element={<ProductDetail/>} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="*" element={<NotFound />} />
