@@ -9,6 +9,7 @@
         box-shadow 1s ease,
         background-color 1s ease;
     color: #c4c4c4;
+    overflow: hidden;
 
     margin: 5px;
     width: 235px;
@@ -34,4 +35,12 @@
     color: var(--primary-color);
     font-family: "Bebas Neue", sans-serif;
     margin: 2px;
+}
+
+.productCard:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+.product-card:hover .buy-btn {
+  opacity: 1;
 }

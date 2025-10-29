@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <div className="footer-content">
         <p>&copy; GameStock. Todos los derechos reservados.</p>
         <ul className="footer-links">
-        <li><a href="#">Inicio</a></li>
+        <li><Link to={`/`}>Inicio </Link></li>
         <li><a href="#">Acerca de</a></li>
         <li><a href="#">Contacto</a></li>
         </ul>

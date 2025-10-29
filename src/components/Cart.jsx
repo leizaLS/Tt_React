@@ -10,7 +10,7 @@ const Cart = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Obtener productos desde Firebase
+  //Obtener info de productos desde Firebase
   useEffect(() => {
     const fetchProductsFromFirebase = async () => {
       try {
@@ -27,7 +27,7 @@ const Cart = () => {
     fetchProductsFromFirebase();
   }, []);
 
-  // 🔹 Vincular los productos del carrito con los datos de Firebase
+  //Map productos
   const cartItemsWithDetails = cartItems
     .map((item) => {
       const product = products.find(
@@ -45,13 +45,13 @@ const Cart = () => {
     })
     .filter((item) => item !== null);
 
-  // 🔹 Calcular total del carrito
+  //Calcular total del carrito
   const totalPrice = cartItemsWithDetails.reduce(
     (acc, item) => acc + item.subtotal,
     0
   );
 
-  // 🔹 Controlar cambios de cantidad
+  //Controlar cambios de cantidad
   const handleQuantityChange = (productId, delta) => {
     changeQuantity(productId, delta);
   };

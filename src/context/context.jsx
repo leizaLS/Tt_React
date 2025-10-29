@@ -8,12 +8,12 @@ export const CartProvider = ({ children }) => {
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  // 🔹 Guardar carrito en localStorage automáticamente cada vez que cambia
+  //Guardar carrito en localStorage automáticamente cada vez que cambia
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // 🔹 Agregar producto al carrito
+  // Agregar producto al carrito
   const addToCart = (productId) => {
     setCartItems((prev) => {
       const updatedCart = [...prev];
@@ -31,7 +31,7 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // 🔹 Cambiar cantidad (usado por los botones + / - del carrito)
+  //  Cambiar cantidad (botones + / -)
   const changeQuantity = (productId, delta) => {
     setCartItems((prev) => {
       const updatedCart = [...prev];
@@ -56,7 +56,7 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
   };
 
-  // 🔹 Calcular total (precio) — usa localStorage.products si existe
+  //Calcular total (precio)/localStorage
   const calculateTotal = () => {
     const storedProducts = JSON.parse(localStorage.getItem("products") || "[]");
     return cartItems.reduce((total, { productId, quantity }) => {
@@ -68,7 +68,7 @@ export const CartProvider = ({ children }) => {
     }, 0);
   };
 
-  // 🔹 Cantidad total de productos
+  //Cantidad total dentro de carrito
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
