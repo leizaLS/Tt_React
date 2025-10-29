@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/context";
-
 import logo from "../img/logo.png";
 
 const NavBar = () => {
   const { cartItems } = useCart();
-  const cartCount = cartItems.length;
+
+  // Contar la cantidad total de productos, incluyendo duplicados
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header id="search-banner">
-      <Link to="/Tt_React">
+      <Link to="/">
         <div className="logo-container">
           <img id="logo" src={logo} alt="logo" />
           <span className="site-name">GAMESTOCK</span>
@@ -19,11 +20,7 @@ const NavBar = () => {
       <div className="search-container">
         <div className="input-with-icon">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Buscar..."
-          />
+          <input type="text" id="search-input" placeholder="Buscar..." />
         </div>
         <div className="search-results"></div>
       </div>

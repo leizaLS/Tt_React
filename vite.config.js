@@ -9,7 +9,7 @@ import react from '@vitejs/plugin-react'
 //Proxy steam
 export default defineConfig({
   plugins: [react()],
-  base: '/Tt_React/', // Raiz proyecto
+  base: '/', // Raiz proyecto
   server: {
     proxy: {
       '/steam-api': {

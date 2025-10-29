@@ -6,6 +6,7 @@
     display: flex;
     gap: 40px;  
     font-family: "Mukta Vaani", sans-serif;
+    padding: 10px;
 }
 
 .container .detail, .pay_method{ 
@@ -27,27 +28,28 @@ h3 {
     border: 3px solid #434343;
     border-radius: 10px;
     width: 100%;
+    margin-bottom: 10px;
 }
 
 /* producto */
-/* .item {
+.item {
     display: flex;
     align-items: center;
     padding: 10px; 
-} */
+}
 
-/* .item img {
-    width: 150px;
+.item img {
+    /* width: 150px; */
     height: auto;
     border-radius: 4px;
     margin-right: 15px;
-} */
+}
 
-/* .item-details .price {
+.item-details .price {
     color: #afafaf;
     font-weight: bold;
     margin: 6px 0;
-} */
+}
 
 /* .qty-controls button {
     height: 28px;
@@ -58,9 +60,9 @@ h3 {
     cursor: pointer;
 } */
 
-/* .qty-controls button:hover {
+.qty-controls button:hover {
     background-color: #6d6d6d;
-} */
+}
 
 /* total */
 .cart-total h3 {
@@ -110,9 +112,9 @@ h3 {
     gap: 10px;
 }
 
-/* .payment-form label {
+.payment-form label {
     color: #c7c7c7;
-} */
+}
 
 h4 {
     margin: 20px 0 0;
