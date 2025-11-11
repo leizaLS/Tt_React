@@ -32,7 +32,7 @@ const ProductDetail = () => {
     fetchProductData();
   }, [id]);
 
-  if (loading) return <h2>Cargando información del juego...</h2>;
+  if (loading) return ;
   if (error) return <h2>{error}</h2>;
   if (!product) return <h2>Producto no encontrado o no disponible.</h2>;
 
