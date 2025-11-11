@@ -12,18 +12,8 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const baseUrl = import.meta.env.DEV
-          ? "/steam-api" // local 
-          : "https://store.steampowered.com"; // vercel
-
-        const response = await fetch(
-          `${baseUrl}/api/appdetails?appids=${id}&l=spanish&cc=US`
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        // Llamamos a la función API interna (backend en Vercel)
+        const response = await fetch(`/api/steam?id=${id}`);
         const data = await response.json();
 
         if (data && data[id] && data[id].success) {
@@ -42,16 +32,16 @@ const ProductDetail = () => {
     fetchProductData();
   }, [id]);
 
-  if (loading) return null;
-  if (error) return <h1>{error}</h1>;
-  if (!product) return <h1>Producto no encontrado o no disponible.</h1>;
+  if (loading) return <h2>Cargando información del juego...</h2>;
+  if (error) return <h2>{error}</h2>;
+  if (!product) return <h2>Producto no encontrado o no disponible.</h2>;
 
   return (
     <div className="product-detail-container">
       <h1>{product.name}</h1>
       <img src={product.header_image} alt={product.name} />
       <div dangerouslySetInnerHTML={{ __html: product.about_the_game }} />
-      <p>Precio: {product.price_overview?.final_formatted}</p>
+      <p>Precio: {product.price_overview?.final_formatted || "Gratis"}</p>
 
       <button
         onClick={() => {
