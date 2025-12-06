@@ -32,9 +32,7 @@ const AuthModal = ({ showModal, closeModal }) => {
           &times;
         </span>
 
-        {/* ======================================
-             SI EL USUARIO ESTÁ LOGUEADO → LOGOUT
-           ====================================== */}
+        {/* Logout*/}
         {isAuthenticated ? (
           <div className="tab-content">
             <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -70,9 +68,6 @@ const AuthModal = ({ showModal, closeModal }) => {
               </div>
             </div>
 
-            {/* =============================
-                TAB: LOGIN
-               ============================= */}
             {activeTab === 'login' && (
               <div className="tab-content">
                 <input 
@@ -93,9 +88,6 @@ const AuthModal = ({ showModal, closeModal }) => {
               </div>
             )}
 
-            {/* =============================
-                TAB: REGISTRO (visual solo)
-               ============================= */}
             {activeTab === 'register' && (
               <div className="tab-content">
                 <input type="email" placeholder="Email" />
