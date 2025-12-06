@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/context';
 import logo from '../img/logo.png';
 
+import { useAuth } from "../context/AuthContext";
+
 const NavBar = ({ openAuthModal }) => {
   const { cartItems } = useCart();
+  const { isAuthenticated, user } = useAuth();
 
   // Contar la cantidad total de productos, incluyendo duplicados
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -30,6 +33,15 @@ const NavBar = ({ openAuthModal }) => {
         <button className="mobile-search">
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
+
+        {isAuthenticated && user?.role === "admin" && (
+          <Link to="/dashboard">
+            <button title="Dashboard" id="dashboard-btn">
+              <i className="fa-solid fa-lock-open"></i>
+            </button>
+          </Link>
+        )}
+
 
         {/* Abrir modal desde App.jsx */}
         <button title="Iniciar sesión/Registro" id="account" onClick={openAuthModal}>
