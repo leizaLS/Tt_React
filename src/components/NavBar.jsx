@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-import { useCart } from "../context/context";
-import logo from "../img/logo.png";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/context';
+import logo from '../img/logo.png';
 
-const NavBar = () => {
+const NavBar = ({ openAuthModal }) => {
   const { cartItems } = useCart();
 
   // Contar la cantidad total de productos, incluyendo duplicados
@@ -12,7 +13,7 @@ const NavBar = () => {
     <header id="search-banner">
       <Link to="/">
         <div className="logo-container">
-          <img id="logo" src={logo} alt="logo" />
+          <img id="logo" src={logo} alt="Logo de GameStock" />
           <span className="site-name">GAMESTOCK</span>
         </div>
       </Link>
@@ -30,14 +31,14 @@ const NavBar = () => {
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
 
-        <button title="Iniciar sesión/Registro" id="account">
+        {/* Abrir modal desde App.jsx */}
+        <button title="Iniciar sesión/Registro" id="account" onClick={openAuthModal}>
           <i className="fa-solid fa-user"></i>
         </button>
 
         <Link to="/cart">
           <button title="Ver carrito" id="cart">
             <i className="fa-solid fa-cart-shopping"></i>
-
             {cartCount > 0 && (
               <span id="cart-count" className="cart-badge">
                 {cartCount}

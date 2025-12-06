@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
+//Crear contexto
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -51,7 +52,7 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // 🔹 Vaciar carrito
+  //Vaciar carrito
   const clearCart = () => {
     setCartItems([]);
   };
