@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { db } from "../db-firebase/firebase.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";;
+import { collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 export default function NewProduct() {
   const [name, setName] = useState("");
@@ -19,13 +19,14 @@ export default function NewProduct() {
     setLoading(true);
 
     try {
-      await addDoc(collection(db, "games"), {
-        id: `m${Date.now()}`,
+      const generatedId = `m${Date.now()}`;
+      
+      await setDoc(doc(collection(db, "games"), generatedId), {
+        id: generatedId,
         name,
         description,
         price: `$${price}`,
-        capsule_image:
-          "https://drive.google.com/uc?export=view&id=1p6A1r9l2QRDeVEb-BjwE9DK3qF17Qv35"
+        capsule_image: "/src/img/dummy_product.jpg"
       });
 
       alert("Producto agregado!");
