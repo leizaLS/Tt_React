@@ -1,14 +1,14 @@
-import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, loading } = useAuth();
+  const { usuario } = useAuth();
 
-  if (loading) return null; // evita errores al refrescar
+  if (!usuario) {
+    return <h2>Necesitas iniciar sesión para acceder a esta sección.</h2>;
+  }
 
-  if (!isAuthenticated) { // si no esta logueado, redirijimos a home
-    console.log("** Se intentó entrar al dashboard no siendo admin")
-    return <Navigate to="/" replace />;
+  if (usuario.role !== "admin") {
+    return <h2>No tienes permiso para acceder a esta sección.</h2>;
   }
 
   return children;

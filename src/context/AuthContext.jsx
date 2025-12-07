@@ -1,27 +1,49 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null); 
+  const [usuario, setUsuario] = useState(null);
 
+  // Restaurar sesión
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+
+    if (token && token.startsWith("fake-token-")) {
+      const username = token.replace("fake-token-", "");
+      const role = username === "a" ? "admin" : "user";
+
+      setUsuario({ nombre: username, role });
+    }
+  }, []);
+
+  // Login
   const login = (username, password) => {
     if (username === "a" && password === "a") {
-      setIsAuthenticated(true);
-      setUser({ username, role: "admin" }); 
+      const token = `fake-token-${username}`;
+      localStorage.setItem("authToken", token);
+
+      const role = username === "a" ? "admin" : "user";
+
+      setUsuario({ nombre: username, role });
       return true;
     }
     return false;
   };
 
+  // Logout
   const logout = () => {
-    setIsAuthenticated(false);
-    setUser(null);
+    localStorage.removeItem("authToken");
+    setUsuario(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{
+      usuario,
+      isAuthenticated: !!usuario,
+      login,
+      logout,
+    }}>
       {children}
     </AuthContext.Provider>
   );

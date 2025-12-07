@@ -7,9 +7,9 @@ import { useAuth } from "../context/AuthContext";
 
 const NavBar = ({ openAuthModal }) => {
   const { cartItems } = useCart();
-  const { isAuthenticated, user } = useAuth();
+  const { usuario, isAuthenticated } = useAuth();
 
-  // Contar la cantidad total de productos, incluyendo duplicados
+  // Contar la cantidad total de productos
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -34,7 +34,8 @@ const NavBar = ({ openAuthModal }) => {
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
 
-        {isAuthenticated && user?.role === "admin" && (
+        {/* Dashboard  */}
+        {isAuthenticated && usuario?.role === "admin" && (
           <Link to="/dashboard">
             <button title="Dashboard" id="dashboard-btn">
               <i className="fa-solid fa-lock-open"></i>
@@ -42,12 +43,12 @@ const NavBar = ({ openAuthModal }) => {
           </Link>
         )}
 
-
-        {/* Abrir modal desde App.jsx */}
+        {/* modal */}
         <button title="Iniciar sesión/Registro" id="account" onClick={openAuthModal}>
           <i className="fa-solid fa-user"></i>
         </button>
 
+        {/* Cart */}
         <Link to="/cart">
           <button title="Ver carrito" id="cart">
             <i className="fa-solid fa-cart-shopping"></i>
