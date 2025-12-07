@@ -4,8 +4,10 @@ import ProductDetail from './components/ProductDetail.jsx';
 import Cart from './components/Cart.jsx';
 import Footer from './components/Footer.jsx';
 import { Routes, Route } from 'react-router-dom';
+
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Dashboard from "./components/Dashboard.jsx";
+import NewProduct from "./components/NewProduct.jsx"; // <-- IMPORTANTE
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import AuthModal from "./components/AuthModal.jsx";
@@ -27,10 +29,16 @@ export default function App() {
         <NavBar openAuthModal={() => setShowAuthModal(true)} />
 
         <Routes>
+          {/* Página principal */}
           <Route path="/" element={<Products />} />
+
+          {/* Detalle del producto */}
           <Route path="/product/:id" element={<ProductDetail />} />
+
+          {/* Carrito */}
           <Route path="/cart" element={<Cart />} />
 
+          {/* Dashboard ADMIN */}
           <Route 
             path="/dashboard"
             element={
@@ -40,6 +48,17 @@ export default function App() {
             }
           />
 
+          {/* Formulario para agregar producto ADMIN */}
+          <Route 
+            path="/addProduct"
+            element={
+              <ProtectedRoute>
+                <NewProduct />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
 

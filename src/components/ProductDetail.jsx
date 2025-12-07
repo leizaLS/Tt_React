@@ -12,9 +12,9 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        // Llamamos a la función API interna (backend en Vercel)
-        const response = await fetch(`/api/steam?id=${id}`);
+        const response = await fetch(`/api/steam?appids=${id}`);
         const data = await response.json();
+        console.log(data);
 
         if (data && data[id] && data[id].success) {
           setProduct(data[id].data);
