@@ -4,25 +4,46 @@ import { useCart } from "../context/context";
 import { db } from "../db-firebase/firebase.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-const ProductDetail = () => {
+import { useAuth } from "../context/AuthContext";
+import EditProduct from "./EditProduct";
+
+export default function ProductDetail() {
   const { id } = useParams();
+  const { addToCart } = useCart();
+  const { usuario, isAuthenticated } = useAuth();
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { addToCart } = useCart();
+
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const load = async () => {
       try {
-        //Producto cargado manualmente
-        if (id.startsWith("m")) {
-          const ref = doc(db, "games", id);
-          const snap = await getDoc(ref);
+        let firebaseData = null;
 
-          if (snap.exists()) {
+        // Cargar datos desde Firebase
+        const ref = doc(db, "games", id);
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+          firebaseData = snap.data();
+        }
+
+        // ───────────────────────────────────────────────
+        // PRODUCTO MANUAL (ID empieza con "m")
+        // ───────────────────────────────────────────────
+        if (id.startsWith("m")) {
+          if (firebaseData) {
             setProduct({
-              ...snap.data(),
-              isSteam: false, // etiqueta para usar luego
+              ...firebaseData,
+              id,
+              isSteam: false,
+              // Imagen local: /src/img/<archivo>
+              capsule_image: firebaseData.image
+                ? `/img/${firebaseData.image}`
+                : null,
             });
           } else {
             setError("Producto manual no encontrado.");
@@ -30,60 +51,102 @@ const ProductDetail = () => {
           return;
         }
 
-        //Producto de steam
+        // ───────────────────────────────────────────────
+        // PRODUCTO STEAM
+        // ───────────────────────────────────────────────
         const response = await fetch(`/api/steam?appids=${id}`);
         const data = await response.json();
 
-        if (data && data[id] && data[id].success) {
-          setProduct({
-            ...data[id].data,
-            isSteam: true,
-          });
-        } else {
+        if (!data?.[id]?.success) {
           setError("No se pudo obtener información de Steam.");
+          return;
         }
+
+        const steamData = data[id].data;
+
+        setProduct({
+          id,
+          isSteam: true,
+          name: firebaseData?.name || steamData.name,
+          description:
+            firebaseData?.description && firebaseData.description !== ""
+              ? firebaseData.description
+              : steamData.about_the_game,
+          price:
+            firebaseData?.price ||
+            steamData.price_overview?.final_formatted ||
+            "Gratis",
+
+          capsule_image: steamData.capsule_image,
+
+          visibility: firebaseData?.visibility ?? true,
+          steamRaw: steamData,
+        });
       } catch (err) {
-        console.error("Error:", err);
-        setError("Hubo un problema al cargar el producto.");
+        console.error(err);
+        setError("Error al cargar el producto.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProduct();
+    load();
   }, [id]);
 
-  if (loading) return <h2>Cargando producto...</h2>;
+  if (loading) return <h2>Cargando...</h2>;
   if (error) return <h2>{error}</h2>;
-  if (!product) return <h2>Producto no encontrado.</h2>;
+  if (!product || product.visibility === false)
+    return <h2>Producto no disponible.</h2>;
+
+  if (showEditModal) {
+    return (
+      <EditProduct
+        product={product}
+        closeModal={() => setShowEditModal(false)}
+      />
+    );
+  }
 
   return (
     <div className="product-detail-container">
+      {/* Botón editar solo admin */}
+      {isAuthenticated && usuario?.role === "admin" && (
+        <button
+          title="Editar producto"
+          id="edit-product-btn"
+          onClick={() => setShowEditModal(true)}
+        >
+          <i className="fa-solid fa-hammer"></i> Editar producto
+        </button>
+      )}
+
       <h1>{product.name}</h1>
 
-      {product.isSteam && (
+      {/* Imagen del producto */}
+      {product.capsule_image ? (
         <img
-          src={product.header_image}
+          src={
+            product.isSteam
+              ? product.steamRaw.header_image
+              : product.capsule_image // imagen local
+          }
           alt={product.name}
         />
-      )}
-
-      {product.isSteam ? (
-        <div dangerouslySetInnerHTML={{ __html: product.about_the_game }} />
       ) : (
-        <p>{product.description}</p>
+        <p>Este producto no tiene imagen.</p>
       )}
 
-      <p>
-        Precio:{" "}
-        {product.isSteam
-          ? product.price_overview?.final_formatted || "Gratis"
-          : product.price}
-      </p>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: product.isSteam
+            ? product.description
+            : `<p>${product.description}</p>`,
+        }}
+      />
+
+      <p>Precio: {product.price}</p>
 
       <button onClick={() => addToCart(id)}>COMPRAR</button>
     </div>
   );
-};
-
-export default ProductDetail;
+}
