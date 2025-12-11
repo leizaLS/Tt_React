@@ -87,7 +87,7 @@ export default function ProductDetail() {
     load();
   }, [id]);
 
-  if (loading) return <h2>Cargando...</h2>;
+  if (loading) return ;
   if (error) return <h2>{error}</h2>;
   if (!product || product.visibility === false)
     return <h2>Producto no disponible.</h2>;

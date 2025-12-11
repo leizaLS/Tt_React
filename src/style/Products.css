@@ -1,8 +1,21 @@
 .products {
-    display: flex;
-    flex-wrap: wrap;
-    font-family: "Raleway";
-    /* background-color: red; */
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+  width: 100%;
+  justify-items: center;
+}
+
+.pagination button {
+    margin-left: 10px;
+}
+.pagination button.active-page-btn {
+  background-color: #444343;
+  color: white;
+}
+
+.pagination button:hover {
+  background-color: #ddd;
 }
 
 .products a {
