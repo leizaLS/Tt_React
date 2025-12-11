@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -22,11 +23,18 @@ export const AuthProvider = ({ children }) => {
     if (username === "a" && password === "a") {
       const token = `fake-token-${username}`;
       localStorage.setItem("authToken", token);
-
       const role = username === "a" ? "admin" : "user";
 
       setUsuario({ nombre: username, role });
+      toast.success('Logueado como Administrador', {
+        style: { backgroundColor: "#37AA9C" }
+      });
       return true;
+    }
+    else {
+      toast.success('Bienvenido ' + username , {
+        style: { backgroundColor: "#37AA9C" }
+      });
     }
     return false;
   };

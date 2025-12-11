@@ -27,7 +27,6 @@ export const CartProvider = ({ children }) => {
       } else {
         updatedCart[existingProductIndex].quantity += 1;
       }
-
       return updatedCart;
     });
   };

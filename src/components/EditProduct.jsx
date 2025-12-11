@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { db } from "../db-firebase/firebase.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { toast } from "react-toastify";
 
 export default function EditProduct({ product, closeModal }) {
   const [name, setName] = useState(product.name || "");
@@ -29,14 +30,13 @@ export default function EditProduct({ product, closeModal }) {
         },
         { merge: true }
       );
-
-      alert("Producto actualizado correctamente.");
       window.location.reload();
-
 
     } catch (err) {
       console.error("Error guardando:", err);
-      alert("Error al guardar los cambios.");
+      toast.error("Error al guardar los cambios", {
+        style: { backgroundColor: "#a80000ff" }
+      });
     }
 
     setSaving(false);

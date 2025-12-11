@@ -13,6 +13,9 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import AuthModal from "./components/AuthModal.jsx";
 import { useState } from "react";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const NotFound = () => (
   <div>
     <h1>Página no encontrada</h1>
@@ -63,6 +66,17 @@ export default function App() {
         </Routes>
 
         <Footer />
+
+        {/* Contenedor de Toastify para las notificaciones */}
+        <ToastContainer
+          position='bottom-right'
+          autoClose={3000}           
+          hideProgressBar={true}
+          closeOnClick
+          draggable
+          pauseOnHover
+          theme='colored'    
+        />
 
         <AuthModal
           showModal={showAuthModal}

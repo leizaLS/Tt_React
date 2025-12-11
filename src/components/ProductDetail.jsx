@@ -6,6 +6,7 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-
 
 import { useAuth } from "../context/AuthContext";
 import EditProduct from "./EditProduct";
+import { toast } from "react-toastify";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -31,16 +32,13 @@ export default function ProductDetail() {
           firebaseData = snap.data();
         }
 
-        // ───────────────────────────────────────────────
         // PRODUCTO MANUAL (ID empieza con "m")
-        // ───────────────────────────────────────────────
         if (id.startsWith("m")) {
           if (firebaseData) {
             setProduct({
               ...firebaseData,
               id,
               isSteam: false,
-              // Imagen local: /src/img/<archivo>
               capsule_image: firebaseData.image
                 ? `/img/${firebaseData.image}`
                 : null,
@@ -51,9 +49,7 @@ export default function ProductDetail() {
           return;
         }
 
-        // ───────────────────────────────────────────────
         // PRODUCTO STEAM
-        // ───────────────────────────────────────────────
         const response = await fetch(`/api/steam?appids=${id}`);
         const data = await response.json();
 
@@ -76,9 +72,7 @@ export default function ProductDetail() {
             firebaseData?.price ||
             steamData.price_overview?.final_formatted ||
             "Gratis",
-
           capsule_image: steamData.capsule_image,
-
           visibility: firebaseData?.visibility ?? true,
           steamRaw: steamData,
         });
@@ -107,6 +101,14 @@ export default function ProductDetail() {
     );
   }
 
+  const handleAddToCart = (id) => {
+    // Llamamos a la función addToCart
+    addToCart(id);   
+    toast.success('¡Producto agregado al carrito!', {
+      style: { backgroundColor: "#3a403d" }
+    });
+  };
+
   return (
     <div className="product-detail-container">
       {/* Botón editar solo admin */}
@@ -114,7 +116,7 @@ export default function ProductDetail() {
         <button
           title="Editar producto"
           id="edit-product-btn"
-          onClick={() => setShowEditModal(true)}
+          onClick={ () => setShowEditModal(true) }
         >
           <i className="fa-solid fa-hammer"></i> Editar producto
         </button>
@@ -146,7 +148,8 @@ export default function ProductDetail() {
 
       <p>Precio: {product.price}</p>
 
-      <button onClick={() => addToCart(id)}>COMPRAR</button>
+      {/* Botón para agregar al carrito */}
+      <button onClick={() => handleAddToCart(id)} >COMPRAR</button>
     </div>
   );
 }

@@ -16,7 +16,7 @@ const AuthModal = ({ showModal, closeModal }) => {
       setUser("");
       setPass("");
     } else {
-      alert("Usuario o contraseña incorrectos (usa a / a)");
+      // alert("Usuario o contraseña incorrectos (usa a / a)");
     }
   };
 

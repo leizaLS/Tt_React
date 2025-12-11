@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { db } from "../db-firebase/firebase.js";
 import { collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { toast } from "react-toastify";
 
 export default function NewProduct() {
   const [name, setName] = useState("");
@@ -12,7 +13,9 @@ export default function NewProduct() {
     e.preventDefault();
 
     if (!name || !description || !price) {
-      alert("Completa todos los campos");
+      toast.error("Error al guardar los cambios", {
+        style: { backgroundColor: "#a80000ff" }
+      });
       return;
     }
 
@@ -29,15 +32,19 @@ export default function NewProduct() {
         capsule_image: "/src/img/dummy_product.jpg"
       });
 
-      alert("Producto agregado!");
+      toast.success('¡Producto agregado!', {
+        style: { backgroundColor: "#3a403d" }
+      });
 
-      // Reset
+      // Reset datos
       setName("");
       setDescription("");
       setPrice("");
     } catch (error) {
       console.error("Error al agregar:", error);
-      alert("Error al agregar producto");
+      toast.error('Error al agregar', {
+        style: { backgroundColor: "#3a403d" }
+      });
     }
 
     setLoading(false);
