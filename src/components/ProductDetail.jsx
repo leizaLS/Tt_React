@@ -110,19 +110,20 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="product-detail-container">
+    <main className="product-detail-container" style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "10px"}}>
       {/* Botón editar solo admin */}
       {isAuthenticated && usuario?.role === "admin" && (
         <button
           title="Editar producto"
           id="edit-product-btn"
           onClick={ () => setShowEditModal(true) }
+          style={{ backgroundColor: "#616161ff" }}
         >
           <i className="fa-solid fa-hammer"></i> Editar producto
         </button>
       )}
 
-      <h1>{product.name}</h1>
+      <h1 style={{ color: "var(--primary-color)"}}>{product.name}</h1>
 
       {/* Imagen del producto */}
       {product.capsule_image ? (
@@ -150,6 +151,6 @@ export default function ProductDetail() {
 
       {/* Botón para agregar al carrito */}
       <button onClick={() => handleAddToCart(id)} >COMPRAR</button>
-    </div>
+    </main>
   );
 }

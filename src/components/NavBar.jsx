@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/context';
 import logo from '../img/logo.png';
-
 import { useAuth } from "../context/AuthContext";
 
 const NavBar = ({ openAuthModal }) => {
   const { cartItems } = useCart();
   const { usuario, isAuthenticated } = useAuth();
+  const [searchActive, setSearchActive] = useState(false);
 
   // Contar la cantidad total de productos
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+  // Función para manejar el clic en el botón de búsqueda de celular
+  const toggleSearch = () => {
+    setSearchActive((prevState) => !prevState); 
+  };
 
   return (
     <header id="search-banner">
@@ -21,7 +26,7 @@ const NavBar = ({ openAuthModal }) => {
         </div>
       </Link>
 
-      <div className="search-container">
+      <div className={`search-container ${searchActive ? 'active' : ''}`}>
         <div className="input-with-icon">
           <i className="fa-solid fa-magnifying-glass"></i>
           <input type="text" id="search-input" placeholder="Buscar..." />
@@ -30,7 +35,7 @@ const NavBar = ({ openAuthModal }) => {
       </div>
 
       <div className="bar-items">
-        <button className="mobile-search">
+        <button className="mobile-search" onClick={toggleSearch}>
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
 
@@ -43,7 +48,7 @@ const NavBar = ({ openAuthModal }) => {
           </Link>
         )}
 
-        {/* modal */}
+        {/* Modal */}
         <button title="Iniciar sesión/Registro" id="account" onClick={openAuthModal}>
           <i className="fa-solid fa-user"></i>
         </button>

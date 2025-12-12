@@ -21,3 +21,34 @@
 .products a {
     text-decoration: none;
 }
+
+/* Responsive */
+@media (max-width: 500px) {
+  .products {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  .productCard {
+    width: unset !important;
+    height: -webkit-fill-available !important;
+  }
+
+  .products .productCard h4 {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 1;
+    margin: 2px;
+  }
+
+  .productCard img {
+    width: -webkit-fill-available;
+  }
+
+  .products a {
+    width: 45%;
+  }
+
+}

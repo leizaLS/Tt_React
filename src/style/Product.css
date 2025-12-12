@@ -16,8 +16,9 @@
     height: 170px;
 }
 
-.productCard img {
+#root .product-detail-container img {
     border-radius: var(--border-radius);
+    width: 50%;
 }
 
 .productCard h4 {
@@ -43,4 +44,11 @@
 }
 .product-card:hover .buy-btn {
   opacity: 1;
+}
+
+@media (max-width: 700px) {
+    #root .product-detail-container img {
+        border-radius: var(--border-radius);
+        width: 100% !important;
+    }
 }

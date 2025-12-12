@@ -44,7 +44,7 @@ export default function EditProduct({ product, closeModal }) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal">
+      <div className="modal" id="editProd">
 
         {/* BOTÓN PARA CERRAR */}
         <span className="modal-close" onClick={closeModal}>
@@ -74,7 +74,6 @@ export default function EditProduct({ product, closeModal }) {
             }
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            style={{ height: "80px" }}
           />
 
           {/* Price */}
@@ -86,16 +85,16 @@ export default function EditProduct({ product, closeModal }) {
           />
 
           {/* Visibility */}
-          <label style={{ marginTop: "10px" }}>
+          <label>
             <input
               type="checkbox"
               checked={visibility}
               onChange={(e) => setVisibility(e.target.checked)}
-              style={{ marginRight: "5px" }}
+              style={{ width:"30px" }}
             />
             Visible en la tienda
           </label>
-
+          <br></br>
           <button onClick={handleSave} disabled={saving} style={{ marginTop: "15px" }}>
             {saving ? "Guardando..." : "Guardar cambios"}
           </button>

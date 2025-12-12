@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { db } from "../db-firebase/firebase.js";
 import { collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { Link } from 'react-router-dom';
 import { toast } from "react-toastify";
 
 export default function NewProduct() {
@@ -13,12 +14,11 @@ export default function NewProduct() {
     e.preventDefault();
 
     if (!name || !description || !price) {
-      toast.error("Error al guardar los cambios", {
+      toast.error("Por favor complete los datos requeridos", {
         style: { backgroundColor: "#a80000ff" }
       });
       return;
     }
-
     setLoading(true);
 
     try {
@@ -46,35 +46,25 @@ export default function NewProduct() {
         style: { backgroundColor: "#3a403d" }
       });
     }
-
     setLoading(false);
   };
 
   return (
-    <div
-      className="container"
-      style={{ maxWidth: 500, margin: "0 auto", display: "grid" }}
-    >
-      <h2>Agregar nuevo producto</h2>
+    <main className="containerForm">
+      <h2> Agregar nuevo producto </h2>
 
+      <h3>*Por favor complete los siguientes datos</h3>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
-          value={name}
-          placeholder="Nombre"
+          type="text" value={name} placeholder="Nombre del producto"
           onChange={(e) => setName(e.target.value)}
         />
 
-        <br />
-
         <textarea
           value={description}
-          placeholder="Descripción"
+          placeholder="Descripción del producto"
           onChange={(e) => setDescription(e.target.value)}
-          style={{ width: "-webkit-fill-available", height: "60px" }}
         />
-
-        <br />
 
         <input
           type="number"
@@ -83,12 +73,19 @@ export default function NewProduct() {
           onChange={(e) => setPrice(e.target.value)}
         />
 
-        <br />
-
+        <h4>*Si no se completaron los datos, no se añadirá el nuevo producto.</h4>
         <button type="submit" disabled={loading}>
-          {loading ? "Guardando..." : "Agregar"}
+          {loading ? "Guardando..." : "Agregar producto"}
         </button>
+
+        
+        <Link to="/dashboard">
+          <button id="dashboard-btn" style={{ backgroundColor: "#616161ff" }}>
+            <i className="fa-solid fa-lock-open"></i> Volver a dashboard 
+          </button>
+        </Link>
+                
       </form>
-    </div>
+    </main>
   );
 }

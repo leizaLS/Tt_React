@@ -4,6 +4,8 @@
 @import url(../src/style/Products.css);
 @import url(../src/style/Product.css);
 @import url(../src/style/Cart.css);
+@import url(../src/style/AddProduct.css);
+@import url(../src/style/EditProduct.css);
 
 /* Fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:wght@100&family=Mukta+Vaani&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
@@ -22,6 +24,19 @@
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body, #root {
+    height: 100%;
+    display: flex;
+    flex-direction: column; /*test*/
+    justify-content: space-between;
+}
+
+main {
+    flex-grow:  1;
 }
 
 body {
@@ -30,6 +45,10 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--background-color);
     color: var(--white);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 button {
@@ -39,8 +58,13 @@ button {
     border: none;
     cursor: pointer;
     padding: 0.5rem 1rem;
+    width: fit-content;
 }
 
 a {
    text-decoration: none; 
+}
+
+li {
+    margin-left: 20px;
 }

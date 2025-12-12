@@ -51,15 +51,6 @@ h3 {
     margin: 6px 0;
 }
 
-/* .qty-controls button {
-    height: 28px;
-    border: none;
-    background-color: #494f4a;
-    font-size: 18px;
-    border-radius: 4px;
-    cursor: pointer;
-} */
-
 .qty-controls button:hover {
     background-color: #6d6d6d;
 }
@@ -126,9 +117,49 @@ h4 {
 
 /* mensaje carrito vacio */
 .emptyMsg {
-    /* display: none; */
     text-align: center;
 }
 .emptyMsg img {
     width: 70%;
+}
+
+/* Responsive */
+@media (max-width: 950px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .container .detail {
+        width: 90%;
+    }
+
+    .pay_method {
+        width: 80%;
+    }
+    
+    .pay_method input, .pay_method button, select {
+        width: 85%;
+    }
+}
+
+@media (max-width: 600px) {
+    .pay_method {
+        width: 100%;
+    }
+
+    .pay_method input, .pay_method button, select {
+        width: 95%;
+    }
+
+    .container .detail {
+        width: 100%;
+    }
+
+    .item a {
+        width: 50%;
+    }
+
+    .item img {
+        width: 90%;
+    }
 }

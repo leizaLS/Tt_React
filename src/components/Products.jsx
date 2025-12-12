@@ -44,8 +44,15 @@ const Products = () => {
 
       const columns = Math.floor(containerWidth / totalWidth);
 
+      //tamaño de pantalla 
+      const windowWidth = window.innerWidth;
+      let rows = 3;
+
+      if (windowWidth < 600) {
+        rows = 12;
+      }
       if (columns >= 1) {
-        const rows = 3; // siempre 3 filas (menos en última página)
+        // const rows = 3; // siempre 3 filas (menos en última página)
         setItemsPerPage(columns * rows);
       }
     };
@@ -66,7 +73,7 @@ const Products = () => {
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
   return (
-    <div>
+    <main>
       <div className="products">
         {currentProducts.map((product) => (
           <Product key={product.id} product={product} />
@@ -89,7 +96,7 @@ const Products = () => {
         })}
         </div>
     )}
-    </div>
+    </main>
   );
 };
 

@@ -1,8 +1,9 @@
 .footer-content {
   width: -webkit-fill-available;
-  margin: auto;
+  /* margin: auto; */
   justify-items: center;
-  /* display: none !important; */
+  padding: 10px 0;
+  border-top: #272727 1px solid;
 }
 
 .footer-links {
