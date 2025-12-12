@@ -4,17 +4,21 @@ import { useCart } from '../context/context';
 import logo from '../img/logo.png';
 import { useAuth } from "../context/AuthContext";
 
-const NavBar = ({ openAuthModal }) => {
+const NavBar = ({ openAuthModal, onSearchChange }) => {
   const { cartItems } = useCart();
   const { usuario, isAuthenticated } = useAuth();
   const [searchActive, setSearchActive] = useState(false);
 
-  // Contar la cantidad total de productos
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  // Función para manejar el clic en el botón de búsqueda de celular
   const toggleSearch = () => {
-    setSearchActive((prevState) => !prevState); 
+    setSearchActive((prevState) => !prevState);
+  };
+
+  const handleSearch = (e) => {
+    if (onSearchChange) {
+      onSearchChange(e.target.value);
+    }
   };
 
   return (
@@ -29,7 +33,12 @@ const NavBar = ({ openAuthModal }) => {
       <div className={`search-container ${searchActive ? 'active' : ''}`}>
         <div className="input-with-icon">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="search-input" placeholder="Buscar..." />
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Buscar..."
+            onChange={handleSearch} 
+          />
         </div>
         <div className="search-results"></div>
       </div>
@@ -39,7 +48,6 @@ const NavBar = ({ openAuthModal }) => {
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
 
-        {/* Dashboard  */}
         {isAuthenticated && usuario?.role === "admin" && (
           <Link to="/dashboard">
             <button title="Dashboard" id="dashboard-btn">
@@ -48,12 +56,14 @@ const NavBar = ({ openAuthModal }) => {
           </Link>
         )}
 
-        {/* Modal */}
-        <button title="Iniciar sesión/Registro" id="account" onClick={openAuthModal}>
+        <button
+          title="Iniciar sesión/Registro"
+          id="account"
+          onClick={openAuthModal}
+        >
           <i className="fa-solid fa-user"></i>
         </button>
 
-        {/* Cart */}
         <Link to="/cart">
           <button title="Ver carrito" id="cart">
             <i className="fa-solid fa-cart-shopping"></i>

@@ -4,6 +4,7 @@ import { db } from "../db-firebase/firebase.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 import cartEmpty from "../img/cart-empty.png";
 import { Link } from "react-router-dom";
+import dummyImg from "../img/dummy_product.jpg";
 
 const Cart = () => {
   const { cartItems, changeQuantity, clearCart } = useCart();
@@ -73,7 +74,7 @@ const Cart = () => {
             cartItemsWithDetails.map((item) => (
               <div key={item.id} className="item">
                 <Link to={`/product/${item.id}`}>
-                  <img src={item.capsule_image} alt={item.name} />
+                  <img src={item.capsule_image ? item.capsule_image : dummyImg} alt={item.name} />
                 </Link>
                 <div className="item-details">
                   <h3>{item.name}</h3>

@@ -7,7 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Dashboard from "./components/Dashboard.jsx";
-import NewProduct from "./components/NewProduct.jsx"; // <-- IMPORTANTE
+import NewProduct from "./components/NewProduct.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import AuthModal from "./components/AuthModal.jsx";
@@ -25,15 +25,23 @@ const NotFound = () => (
 
 export default function App() {
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <AuthProvider>
       <>
-        <NavBar openAuthModal={() => setShowAuthModal(true)} />
+        {/* Pasamos setSearchTerm al navbar */}
+        <NavBar 
+          openAuthModal={() => setShowAuthModal(true)}
+          onSearchChange={setSearchTerm}   // ⭐ conectar buscador
+        />
 
         <Routes>
-          {/* Página principal */}
-          <Route path="/" element={<Products />} />
+          {/* Página principal con búsqueda */}
+          <Route 
+            path="/" 
+            element={<Products searchTerm={searchTerm} />} 
+          />
 
           {/* Detalle del producto */}
           <Route path="/product/:id" element={<ProductDetail />} />
@@ -51,7 +59,7 @@ export default function App() {
             }
           />
 
-          {/* Formulario para agregar producto ADMIN */}
+          {/* Formulario agregar producto ADMIN */}
           <Route 
             path="/addProduct"
             element={
@@ -67,15 +75,14 @@ export default function App() {
 
         <Footer />
 
-        {/* Contenedor de Toastify para las notificaciones */}
         <ToastContainer
           position='bottom-right'
-          autoClose={3000}           
+          autoClose={3000}
           hideProgressBar={true}
           closeOnClick
           draggable
           pauseOnHover
-          theme='colored'    
+          theme='colored'
         />
 
         <AuthModal

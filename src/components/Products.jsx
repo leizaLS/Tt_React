@@ -5,7 +5,7 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/f
 import Product from "./ProductCard.jsx";
 import { useAuth } from "../context/AuthContext";
 
-const Products = () => {
+const Products = ({ searchTerm = "" }) => {   // 👈 recibe el texto del buscador
   const { usuario, isAuthenticated } = useAuth();
 
   const [products, setProducts] = useState([]);
@@ -24,7 +24,7 @@ const Products = () => {
           id: doc.id,
         }));
 
-        // 🔥 FILTRAR SEGÚN PERMISOS
+        // FILTRAR POR VISIBILIDAD SI NO ES ADMIN
         if (!(isAuthenticated && usuario?.role === "admin")) {
           productsList = productsList.filter((p) => p.visibility === true);
         }
@@ -51,12 +51,8 @@ const Products = () => {
 
       const columns = Math.floor(containerWidth / totalWidth);
 
-      const windowWidth = window.innerWidth;
       let rows = 3;
-
-      if (windowWidth < 600) {
-        rows = 12;
-      }
+      if (window.innerWidth < 600) rows = 12;
 
       if (columns >= 1) {
         setItemsPerPage(columns * rows);
@@ -71,13 +67,18 @@ const Products = () => {
 
   if (loading) return null;
 
-  // Paginación
+  // Filtrar 
+  const filteredProducts = products.filter((p) =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Paginación sobre los productos filtrados
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
 
-  const currentProducts = products.slice(firstIndex, lastIndex);
+  const currentProducts = filteredProducts.slice(firstIndex, lastIndex);
 
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   return (
     <main>
