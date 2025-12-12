@@ -89,7 +89,7 @@ export default function ProductDetail() {
 
   if (loading) return ;
   if (error) return <h2>{error}</h2>;
-  if (!product || product.visibility === false)
+  if (!product)
     return <h2>Producto no disponible.</h2>;
 
   if (showEditModal) {
