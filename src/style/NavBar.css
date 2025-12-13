@@ -215,12 +215,13 @@
         z-index: 1001;
         top: 70px;
         left: 0;
-        margin: 0 10px;
+        margin: 0 ;
         width: 100%;
         max-height: 0;
         opacity: 0;
         pointer-events: none;
         transition: max-height 0.4s ease, opacity 0.4s ease;
+        border-radius: 5px;
     }
 
     .search-container.active {
@@ -228,9 +229,9 @@
         opacity: 1;
         pointer-events: auto;
         width: -webkit-fill-available;
-        margin: 0;
-        border-top: 2px solid var(--primary-color);
-        border-bottom: 2px solid var(--primary-color);
+        /* margin: 0 -10px 0 0; */
+        margin-top: -10px;
+        border: 2px solid var(--primary-color);
     }
 
     .bar-items button {

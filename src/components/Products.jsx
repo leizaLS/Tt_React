@@ -5,7 +5,7 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/f
 import Product from "./ProductCard.jsx";
 import { useAuth } from "../context/AuthContext";
 
-const Products = ({ searchTerm = "" }) => {   // 👈 recibe el texto del buscador
+const Products = ({ searchTerm = "" }) => { 
   const { usuario, isAuthenticated } = useAuth();
 
   const [products, setProducts] = useState([]);
@@ -13,6 +13,11 @@ const Products = ({ searchTerm = "" }) => {   // 👈 recibe el texto del buscad
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(9);
+
+  // Solucion bug, no encontraba resultados si no se estaba en la pag 1
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   // Fetch productos
   useEffect(() => {
