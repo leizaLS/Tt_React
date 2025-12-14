@@ -51,6 +51,10 @@ h3 {
     margin: 6px 0;
 }
 
+.qty-controls button {
+    margin: 0 10px;
+}
+
 .qty-controls button:hover {
     background-color: #6d6d6d;
 }
@@ -161,5 +165,9 @@ h4 {
 
     .item img {
         width: 90%;
+    }
+
+    .item-details {
+        width: 50%;
     }
 }

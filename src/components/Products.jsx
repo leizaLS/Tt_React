@@ -5,8 +5,9 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/f
 import Product from "./ProductCard.jsx";
 import { useAuth } from "../context/AuthContext";
 
-const Products = ({ searchTerm = "" }) => { 
+const Products = ({ searchTerm = "" }) => {
   const { usuario, isAuthenticated } = useAuth();
+  const isAdmin = isAuthenticated && usuario?.role === "admin"; // Determinar si es admin
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,12 +15,12 @@ const Products = ({ searchTerm = "" }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(9);
 
-  // Solucion bug, no encontraba resultados si no se estaba en la pag 1
+  // Solución para bug de búsqueda cuando no se está en la página 1
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
 
-  // Fetch productos
+  // Fetch productos desde Firebase
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -29,7 +30,7 @@ const Products = ({ searchTerm = "" }) => {
           id: doc.id,
         }));
 
-        // FILTRAR POR VISIBILIDAD SI NO ES ADMIN
+        // Filtrar productos por visibilidad si NO es admin
         if (!(isAuthenticated && usuario?.role === "admin")) {
           productsList = productsList.filter((p) => p.visibility === true);
         }
@@ -72,7 +73,7 @@ const Products = ({ searchTerm = "" }) => {
 
   if (loading) return null;
 
-  // Filtrar 
+  // Filtrar productos según el término de búsqueda
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -89,7 +90,7 @@ const Products = ({ searchTerm = "" }) => {
     <main>
       <div className="products">
         {currentProducts.map((product) => (
-          <Product key={product.id} product={product} />
+          <Product key={product.id} product={product} isAdmin={isAdmin} />
         ))}
       </div>
 

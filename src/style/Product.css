@@ -14,6 +14,7 @@
     margin: 5px;
     width: 235px;
     height: 170px;
+    position: relative;
 }
 
 #root .product-detail-container img {
@@ -44,6 +45,19 @@
 }
 .product-card:hover .buy-btn {
   opacity: 1;
+}
+
+/*Icono visibilidad*/
+.visibility-icon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #167b62;
+  color: white;
+  padding: 6px;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  z-index: 2;
 }
 
 @media (max-width: 700px) {

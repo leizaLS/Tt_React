@@ -33,7 +33,7 @@ export default function App() {
         {/* Pasamos setSearchTerm al navbar */}
         <NavBar 
           openAuthModal={() => setShowAuthModal(true)}
-          onSearchChange={setSearchTerm}   // ⭐ conectar buscador
+          onSearchChange={setSearchTerm}   // conectar buscador
         />
 
         <Routes>

@@ -6,59 +6,69 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
 
-  // Restaurar sesión
+  //Restaurar sesión
   useEffect(() => {
     const token = localStorage.getItem("authToken");
+    const role = localStorage.getItem("authRole");
+    const username = localStorage.getItem("authUser");
 
-    if (token && token.startsWith("fake-token-")) {
-      const username = token.replace("fake-token-", "");
-      const role = username === "a" ? "admin" : "user";
-
+    if (token && role && username) {
       setUsuario({ nombre: username, role });
     }
   }, []);
 
-  // Login
+  //Login
   const login = (username, password) => {
-  // Login Admin
-  if (username === "admin" && password === "1234.react") {
-    const token = `fake-token-${username}`;
-    localStorage.setItem("authToken", token);
-    setUsuario({ nombre: username, role: "admin" });
+    // ADMIN
+    if (username === "admin" && password === "1234.react") {
+      localStorage.setItem("authToken", "fake-token-admin");
+      localStorage.setItem("authUser", username);
+      localStorage.setItem("authRole", "admin");
 
-    toast.success('Logueado como Administrador', {
-      style: { backgroundColor: "#37AA9C" }
-    });
-    return true;
-  }
+      setUsuario({ nombre: username, role: "admin" });
 
-  // Usuario normal
-  if (username && password) {
-    const token = `fake-token-${username}`;
-    localStorage.setItem("authToken", token);
-    setUsuario({ nombre: username, role: "user" });
+      toast.success("Logueado como Administrador", {
+        style: { backgroundColor: "#37AA9C" }
+      });
 
-    toast.success(`Bienvenido ${username}`, {
-      style: { backgroundColor: "#37AA9C" }
-    });
-    return true;
-  }
-  return false;
-};
+      return true;
+    }
 
-  // Logout
+    // USUARIO NORMAL
+    if (username && password) {
+      localStorage.setItem("authToken", `fake-token-${username}`);
+      localStorage.setItem("authUser", username);
+      localStorage.setItem("authRole", "user");
+
+      setUsuario({ nombre: username, role: "user" });
+
+      toast.success(`Bienvenido ${username}`, {
+        style: { backgroundColor: "#37AA9C" }
+      });
+
+      return true;
+    }
+
+    return false;
+  };
+
+  //Logout
   const logout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("authRole");
     setUsuario(null);
   };
 
   return (
-    <AuthContext.Provider value={{
-      usuario,
-      isAuthenticated: !!usuario,
-      login,
-      logout,
-    }}>
+    <AuthContext.Provider
+      value={{
+        usuario,
+        isAuthenticated: !!usuario,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
