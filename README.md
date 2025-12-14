@@ -1,6 +1,6 @@
 # 🎮 GAMESTOCK
 
-GameStock es una tienda web de videojuegos ficticia desarrollada con **React** y  **Firebase** , que permite a usuario navegar, buscar y comprar productos, y a administradores gestionar visibilidad y acceso a funcionalidades avanzadas. El proyecto fue realizado como proyecto final para el curso de React JS de Talento Tech.
+GameStock es una tienda web de videojuegos ficticia desarrollada con **React** y  **Firebase** , que permite a usuario navegar, buscar y comprar productos, y a administradores gestionar visibilidad y acceso a funcionalidades avanzadas. El proyecto fue realizado como proyecto final para el curso de **React JS de Talento Tech**.
 
 ---
 
@@ -112,7 +112,7 @@ npm run dev
 
 ## 🔨Próximas funcionalidades a agregar
 
-* Permitir registro de usuarios
+* Permitir registro de usuarios (firebase u otro gestor)
 * Agregar tags a productos
 * Permitir busqueda más personalizadas (por precio, tags, etc)
 * Subida de imagenes/videos a productos (banner y dentro de detalles de producto)
