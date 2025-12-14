@@ -5,6 +5,8 @@ const AuthModal = ({ showModal, closeModal }) => {
   const [activeTab, setActiveTab] = useState('login');
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [autoFillAdmin, setAutoFillAdmin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { isAuthenticated, login, logout } = useAuth();
 
@@ -15,24 +17,35 @@ const AuthModal = ({ showModal, closeModal }) => {
       closeModal();
       setUser("");
       setPass("");
-    } else {
-      // alert("Usuario o contraseña incorrectos (usa a / a)");
+      setAutoFillAdmin(false);
+      setShowPassword(false);
     }
   };
 
-  // Si NO hay modal abierto, no renderizar nada
+  const handleAutofill = (checked) => {
+    setAutoFillAdmin(checked);
+
+    if (checked) {
+      setUser("admin");
+      setPass("1234.react");
+    } else {
+      setUser("");
+      setPass("");
+    }
+  };
+
   if (!showModal) return null;
 
   return (
     <div className="modal-overlay">
       <div className="modal">
 
-        {/* BOTÓN PARA CERRAR */}
+        {/* BOTÓN CERRAR */}
         <span className="modal-close" onClick={closeModal}>
           &times;
         </span>
 
-        {/* Logout*/}
+        {/* LOGOUT */}
         {isAuthenticated ? (
           <div className="tab-content">
             <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -43,6 +56,10 @@ const AuthModal = ({ showModal, closeModal }) => {
               onClick={() => {
                 logout();
                 closeModal();
+                setUser("");
+                setPass("");
+                setAutoFillAdmin(false);
+                setShowPassword(false);
               }}
               style={{ width: "100%" }}
             >
@@ -51,7 +68,7 @@ const AuthModal = ({ showModal, closeModal }) => {
           </div>
         ) : (
           <>
-            {/* TABS (LOGIN / REGISTRO) */}
+            {/* TABS */}
             <div className="tabs">
               <div
                 className={`tab ${activeTab === 'login' ? 'active' : ''}`}
@@ -68,31 +85,70 @@ const AuthModal = ({ showModal, closeModal }) => {
               </div>
             </div>
 
+            {/* LOGIN */}
             {activeTab === 'login' && (
               <div className="tab-content">
-                <input 
-                  type="text" 
-                  placeholder="Usuario" 
+                <input
+                  type="text"
+                  placeholder="Usuario"
                   value={user}
                   onChange={(e) => setUser(e.target.value)}
                 />
-                
-                <input 
-                  type="password" 
-                  placeholder="Contraseña" 
-                  value={pass}
-                  onChange={(e) => setPass(e.target.value)}
-                />
-                
+
+                {/* PASSWORD CON OJO */}
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Contraseña"
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
+                    style={{ paddingRight: "40px" }}
+                  />
+
+                  <i
+                    className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: "absolute",
+                      right: "12px",
+                      top: "38%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      color: "#aaa"
+                    }}
+                    title={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  />
+                </div>
+
+                {/* AUTOFILL ADMIN */}
+                <label
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    fontSize: "0.9rem",
+                    marginTop: "10px",
+                    paddingRight: "20px",
+                    cursor: "pointer"
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={autoFillAdmin}
+                    onChange={(e) => handleAutofill(e.target.checked)}
+                  />
+                  Probar Administrador
+                </label>
+
                 <button onClick={handleLogin}>Entrar</button>
               </div>
             )}
 
+            {/* REGISTRO (placeholder) */}
             {activeTab === 'register' && (
               <div className="tab-content">
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Contraseña" />
-                <button>Registrarse</button>
+                <input type="email" placeholder="Email (Próximamente)" />
+                <input type="password" placeholder="Contraseña (Próximamente)" />
+                <button disabled>Registrarse</button>
               </div>
             )}
           </>

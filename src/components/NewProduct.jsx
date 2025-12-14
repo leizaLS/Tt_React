@@ -68,6 +68,8 @@ export default function NewProduct() {
 
         <input
           type="number"
+          min="1"
+          step="1"
           value={price}
           placeholder="Precio (Solo números)"
           onChange={(e) => setPrice(e.target.value)}

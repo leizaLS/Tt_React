@@ -57,8 +57,9 @@ const NavBar = ({ openAuthModal, onSearchChange }) => {
         )}
 
         <button
-          title="Iniciar sesión/Registro"
+          title={isAuthenticated ? "Sesión iniciada" : "Iniciar sesión / Registro"}
           id="account"
+          className={isAuthenticated ? "account-logged" : "account-guest"}
           onClick={openAuthModal}
         >
           <i className="fa-solid fa-user"></i>

@@ -184,6 +184,11 @@
   margin-bottom: 10px;
 }
 
+#account.account-logged {
+  background-color: var(--dark-gray);
+}
+
+
 /* Responsive */
 @media (max-width: 800px) {
     .site-name {

@@ -20,24 +20,31 @@ export const AuthProvider = ({ children }) => {
 
   // Login
   const login = (username, password) => {
-    if (username === "a" && password === "a") {
-      const token = `fake-token-${username}`;
-      localStorage.setItem("authToken", token);
-      const role = username === "a" ? "admin" : "user";
+  // Login Admin
+  if (username === "admin" && password === "1234.react") {
+    const token = `fake-token-${username}`;
+    localStorage.setItem("authToken", token);
+    setUsuario({ nombre: username, role: "admin" });
 
-      setUsuario({ nombre: username, role });
-      toast.success('Logueado como Administrador', {
-        style: { backgroundColor: "#37AA9C" }
-      });
-      return true;
-    }
-    else {
-      toast.success('Bienvenido ' + username , {
-        style: { backgroundColor: "#37AA9C" }
-      });
-    }
-    return false;
-  };
+    toast.success('Logueado como Administrador', {
+      style: { backgroundColor: "#37AA9C" }
+    });
+    return true;
+  }
+
+  // Usuario normal
+  if (username && password) {
+    const token = `fake-token-${username}`;
+    localStorage.setItem("authToken", token);
+    setUsuario({ nombre: username, role: "user" });
+
+    toast.success(`Bienvenido ${username}`, {
+      style: { backgroundColor: "#37AA9C" }
+    });
+    return true;
+  }
+  return false;
+};
 
   // Logout
   const logout = () => {
