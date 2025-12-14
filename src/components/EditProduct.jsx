@@ -8,13 +8,36 @@ export default function EditProduct({ product, closeModal }) {
   const [description, setDescription] = useState(
     product.isSteam && !product.description ? "" : product.description || ""
   );
-  const [price, setPrice] = useState(
-    product.price?.replace("$", "") || ""
-  );
+  const [price, setPrice] = useState(product.price?.replace("$", "") || "");
   const [visibility, setVisibility] = useState(product.visibility ?? true);
   const [saving, setSaving] = useState(false);
 
+  // Validación de campos antes de guardar
+  const validateFields = () => {
+    if (!name.trim()) {
+      toast.error("El nombre del producto es obligatorio", {
+        style: { backgroundColor: "#a80000ff" }
+      });
+      return false;
+    }
+    if (!description.trim()) {
+      toast.error("La descripción del producto es obligatoria", {
+        style: { backgroundColor: "#a80000ff" }
+      });
+      return false;
+    }
+    if (!price.trim() || isNaN(price) || parseFloat(price) <= 0) {
+      toast.error("El precio debe ser un número mayor a cero", {
+        style: { backgroundColor: "#a80000ff" }
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleSave = async () => {
+    if (!validateFields()) return; // Solo guarda si la validación es exitosa
+
     setSaving(true);
 
     try {
@@ -30,7 +53,10 @@ export default function EditProduct({ product, closeModal }) {
         },
         { merge: true }
       );
-      window.location.reload();
+      toast.success("Producto actualizado correctamente", {
+        style: { backgroundColor: "#28a745" }
+      });
+      window.location.reload(); // Recarga la página para reflejar los cambios
 
     } catch (err) {
       console.error("Error guardando:", err);
@@ -69,7 +95,7 @@ export default function EditProduct({ product, closeModal }) {
           <textarea
             placeholder={
               product.isSteam
-                ? "Descripción (vacío = usar descripción de Steam)"
+                ? "Descripción"
                 : "Descripción"
             }
             value={description}
@@ -90,11 +116,11 @@ export default function EditProduct({ product, closeModal }) {
               type="checkbox"
               checked={visibility}
               onChange={(e) => setVisibility(e.target.checked)}
-              style={{ width:"30px" }}
+              style={{ width: "30px" }}
             />
             Visible en la tienda
           </label>
-          <br></br>
+          <br />
           <button onClick={handleSave} disabled={saving} style={{ marginTop: "15px" }}>
             {saving ? "Guardando..." : "Guardar cambios"}
           </button>
