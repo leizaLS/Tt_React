@@ -71,7 +71,7 @@
 /* Botón del search bar */
 .bar-items button {
     padding: 10px 15px;
-    background-color: #417b70;
+    background-color: #365952;
     font-size: var(--font-size-base);
     transition: transform 0.3s ease;
 }
